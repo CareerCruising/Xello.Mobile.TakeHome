@@ -1,29 +1,147 @@
-<input type="text" placeholder="Filter by school name..." [(ngModel)]="filter" class="college-filter" />
-<table>
-  <thead>
-    <tr>
-      <th>Id</th>
-      <th>Name</th>
-      <th>City</th>
-      <th>State</th>
-      <th>Num Students</th>
-      <th>Tuition & Fees</th>
-      <th>Num Majors</th>
-      <th>Has Sports</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let college of (colleges$ | async); trackBy: trackById" (click)="onRowClick(college)">
-      <td data-label="Id">{{ college.id }}</td>
-      <td data-label="Name">{{ college.name }}</td>
-      <td data-label="City">{{ college.city }}</td>
-      <td data-label="State">{{ college.state }}</td>
-      <td data-label="Num Students">{{ college.numStudents }}</td>
-      <td data-label="Tuition & Fees">{{ college.tuitionAndFees | currency:'USD' }}</td>
-      <td data-label="Num Majors">{{ college.numMajors }}</td>
-      <td data-label="Has Sports">{{ college.hasSports ? 'Yes' : 'No' }}</td>
-    </tr>
-  </tbody>
-</table>
-<div *ngIf="loading$ | async" class="loading">Loading colleges...</div>
-<div *ngIf="error$ | async as error" class="error">Error: {{ error }}</div>
+<div *ngIf="loading$ | async" class="loading" role="status" aria-live="polite"
+  style="padding: 1rem; text-align: center; color: var(--color-text-muted)">
+  Loading colleges…
+</div>
+<div *ngIf="error$ | async as error" class="error" role="alert" style="
+    padding: 1rem 1.25rem;
+    margin-bottom: 1rem;
+    border-radius: 0.5rem;
+    background: #fef2f2;
+    border: 1px solid #fca5a5;
+    color: #b91c1c;
+  ">
+  ⚠ Failed to load colleges: {{ error?.message ?? error ?? 'Unknown error' }}.
+  Please refresh.
+</div>
+
+<!-- Filter -->
+<div class="filter-row">
+  <label for="collegeFilter" class="filter-label">Search</label>
+  <input id="collegeFilter" type="search" placeholder="Search by name, city or state…" [(ngModel)]="filter"
+    (ngModelChange)="onFilterChange()" class="college-filter" />
+</div>
+
+<!-- Result count — desktop only (mobile uses infinite scroll so no count requird) -->
+<p class="result-count desktop-only" aria-live="polite" aria-atomic="true">
+  Showing {{ displayedColleges.length }} of
+  {{ processedColleges.length }} colleges
+</p>
+
+<div class="table-container">
+  <table aria-label="College list">
+    <caption class="sr-only">
+      List of colleges with sortable columns
+    </caption>
+    <colgroup>
+      <col class="col-id" />
+      <col class="col-name" />
+      <col class="col-city" />
+      <col class="col-state" />
+      <col class="col-students" />
+      <col class="col-tuition" />
+      <col class="col-majors" />
+      <col class="col-sports" />
+    </colgroup>
+    <thead>
+      <tr>
+        <th scope="col">
+          <button class="sort-btn" (click)="onSort('id')" [attr.aria-sort]="
+              sortColumn === 'id' ? sortDirection + 'ending' : 'none'
+            ">
+            Id <span aria-hidden="true">{{ getSortIcon('id') }}</span>
+          </button>
+        </th>
+        <th scope="col">
+          <button class="sort-btn" (click)="onSort('name')" [attr.aria-sort]="
+              sortColumn === 'name' ? sortDirection + 'ending' : 'none'
+            ">
+            Name <span aria-hidden="true">{{ getSortIcon('name') }}</span>
+          </button>
+        </th>
+        <th scope="col">
+          <button class="sort-btn" (click)="onSort('city')" [attr.aria-sort]="
+              sortColumn === 'city' ? sortDirection + 'ending' : 'none'
+            ">
+            City <span aria-hidden="true">{{ getSortIcon('city') }}</span>
+          </button>
+        </th>
+        <th scope="col">
+          <button class="sort-btn" (click)="onSort('state')" [attr.aria-sort]="
+              sortColumn === 'state' ? sortDirection + 'ending' : 'none'
+            ">
+            State <span aria-hidden="true">{{ getSortIcon('state') }}</span>
+          </button>
+        </th>
+        <th scope="col">
+          <button class="sort-btn" (click)="onSort('numStudents')" [attr.aria-sort]="
+              sortColumn === 'numStudents' ? sortDirection + 'ending' : 'none'
+            ">
+            Students
+            <span aria-hidden="true">{{ getSortIcon('numStudents') }}</span>
+          </button>
+        </th>
+        <th scope="col">
+          <button class="sort-btn" (click)="onSort('tuitionAndFees')" [attr.aria-sort]="
+              sortColumn === 'tuitionAndFees'
+                ? sortDirection + 'ending'
+                : 'none'
+            ">
+            Tuition &amp; Fees
+            <span aria-hidden="true">{{ getSortIcon('tuitionAndFees') }}</span>
+          </button>
+        </th>
+        <th scope="col">
+          <button class="sort-btn" (click)="onSort('numMajors')" [attr.aria-sort]="
+              sortColumn === 'numMajors' ? sortDirection + 'ending' : 'none'
+            ">
+            Majors
+            <span aria-hidden="true">{{ getSortIcon('numMajors') }}</span>
+          </button>
+        </th>
+        <th scope="col">
+          <button class="sort-btn" (click)="onSort('hasSports')" [attr.aria-sort]="
+              sortColumn === 'hasSports' ? sortDirection + 'ending' : 'none'
+            ">
+            Sports
+            <span aria-hidden="true">{{ getSortIcon('hasSports') }}</span>
+          </button>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- trackById fixed: was `item.id + Math.random()` causing full DOM re-creation every cycle -->
+      <tr *ngFor="let college of displayedColleges; trackBy: trackById" #collegeRow (click)="onRowClick(college)"
+        (keydown.enter)="onRowClick(college)" tabindex="0" role="button"
+        [attr.aria-label]="'View details for ' + college.name">
+        <td data-label="Id">{{ college.id }}</td>
+        <td data-label="Name">{{ college.name }}</td>
+        <td data-label="City">{{ college.city }}</td>
+        <td data-label="State">{{ college.state }}</td>
+        <td data-label="Students">{{ college.numStudents | number }}</td>
+        <td data-label="Tuition &amp; Fees">
+          {{ college.tuitionAndFees | currency: 'USD' }}
+        </td>
+        <td data-label="Majors">{{ college.numMajors }}</td>
+        <td data-label="Sports">{{ college.hasSports ? 'Yes' : 'No' }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Empty state -->
+  <p *ngIf="!(loading$ | async) && processedColleges.length === 0" class="empty-state">
+    No colleges match your filter.
+  </p>
+</div>
+
+<!-- Desktop pagination (hidden on mobile via CSS) -->
+<nav class="pagination desktop-only" aria-label="Pagination" *ngIf="!isMobile && totalPages > 1">
+  <button class="page-btn" (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 0"
+    aria-label="Previous page">
+    ← Previous
+  </button>
+  <span class="page-info">Page {{ currentPage + 1 }} of {{ totalPages }}</span>
+  <button class="page-btn" (click)="goToPage(currentPage + 1)" [disabled]="currentPage >= totalPages - 1"
+    aria-label="Next page">
+    Next →
+  </button>
+</nav>

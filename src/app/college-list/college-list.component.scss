@@ -1,36 +1,240 @@
+@import '../../styles.scss';
+
+:host {
+  display: block;
+  width: 100%;
+  max-width: var(--page-max-width);
+  margin: 0 auto;
+  padding: 1.5rem 1.5rem 0;
+  box-sizing: border-box;
+}
+
+// Filter row
+.filter-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.filter-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-primary-dark);
+  white-space: nowrap;
+}
+
+//
+.college-filter {
+  width: 100%;
+  max-width: 24rem;
+  padding: 0.6rem 1rem;
+  font-size: 1rem;
+  font-family: var(--font-family);
+  border: 1.5px solid var(--color-border);
+  border-radius: 0.5rem;
+  outline: none;
+  color: var(--gray-900);
+  background: white;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+
+  &:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+  }
+
+  &::placeholder {
+    color: var(--color-text-muted);
+  }
+}
+
+.result-count {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  margin: 0 0 0.75rem;
+}
+
+// Table container
+.table-container {
+  width: 100%;
+  overflow-x: clip;
+  border: 1px solid var(--color-border);
+  border-radius: 0.5rem;
+}
+
+// Table
 table {
   width: 100%;
   border-collapse: collapse;
+  table-layout: fixed;
+}
+
+col.col-id {
+  width: 5%;
+}
+col.col-name {
+  width: 24%;
+}
+col.col-city {
+  width: 13%;
+}
+col.col-state {
+  width: 7%;
+}
+col.col-students {
+  width: 11%;
+}
+col.col-tuition {
+  width: 17%;
+}
+col.col-majors {
+  width: 10%;
+}
+col.col-sports {
+  width: 10%;
 }
 
 thead th {
   position: sticky;
-  top: 4.5rem;
-  background: #fff;
+  /* Page scrolls so sticky must offset below the fixed nav */
+  top: var(--nav-height);
   z-index: 2;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+  background: #f0f0ff;
+  color: var(--color-primary-dark);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
 }
 
 tbody td,
 thead th {
   padding: 0.75rem 1rem;
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid var(--color-border);
   text-align: left;
 }
 
 tr:nth-child(even) {
-  background: #f9f9f9;
+  background: var(--color-surface);
 }
 
 tr:hover {
-  background: linear-gradient(90deg, #e0e7ff 0%, #f3e8ff 100%);
-  box-shadow: 0 2px 12px rgba(79, 70, 229, 0.08);
-  transform: scale(1.01);
-  transition: background 0.3s, box-shadow 0.3s, transform 0.2s;
+  background: var(--gradient-row-hover);
+  box-shadow: var(--shadow-card);
   cursor: pointer;
+  transition:
+    background 0.2s,
+    box-shadow 0.2s;
+}
+
+// Sort buttons
+.sort-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-weight: 600;
+  white-space: nowrap;
+
+  &:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+}
+
+// Empty state
+.empty-state {
+  text-align: center;
+  padding: 2rem;
+  color: var(--color-text-muted);
+}
+
+// Desktop pagination, no need in mobile
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1.25rem 0 2rem;
+}
+
+.page-btn {
+  padding: 0.5rem 1.25rem;
+  min-height: 44px;
+  border: 1px solid var(--color-primary);
+  border-radius: 0.5rem;
+  background: white;
+  color: var(--color-primary);
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    color 0.2s;
+
+  &:hover:not(:disabled) {
+    background: var(--color-primary);
+    color: white;
+  }
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+  &:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+}
+
+.page-info {
+  font-size: 0.9rem;
+  color: var(--gray-700);
+  min-width: 8rem;
+  text-align: center;
 }
 
 @media (max-width: 500px) {
+  .desktop-only {
+    display: none;
+  }
+
+  // Caption visible on mobile, centred
+  caption.sr-only {
+    position: static;
+    width: auto;
+    height: auto;
+    clip: auto;
+    white-space: normal;
+    overflow: visible;
+    margin: 0 0 1rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    text-align: center;
+    display: block;
+  }
+
+  // desk
+  .table-container {
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    overflow-x: visible;
+  }
+
+  // Remove host padding on mobil
+  :host {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+
   table,
   thead,
   tbody,
@@ -47,23 +251,25 @@ tr:hover {
   }
 
   tr {
-    margin-bottom: 1.5rem;
-    background: #fff;
-    box-shadow: 0 2px 8px rgba(79, 70, 229, 0.08);
+    margin-bottom: 1rem;
+    background: white;
     border-radius: 0.75rem;
-    padding: 1rem;
-    transition: box-shadow 0.3s;
-    position: relative;
-    min-width: 0;
+    box-shadow: var(--shadow-card);
+    padding: 0.25rem 1rem;
     overflow: hidden;
-    overflow-x: auto;
+    transition: box-shadow 0.2s;
+    border: 2px solid var(--color-primary);
 
-    &:hover {
-      box-shadow: 0 4px 16px rgba(79, 70, 229, 0.15);
-      transform: scale(1.01);
-      background: linear-gradient(90deg, #e0e7ff 0%, #f3e8ff 100%);
+    &:nth-child(even) {
+      border-color: var(--color-accent);
     }
 
+    &:hover {
+      box-shadow: var(--shadow-card-hover);
+    }
+    &:last-child {
+      margin-bottom: 0;
+    }
     &:last-child td {
       border-bottom: none;
     }
@@ -73,19 +279,16 @@ tr:hover {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.75rem 0.5rem;
+    padding: 0.7rem 0;
     border: none;
-    border-bottom: 1px solid #e5e7eb;
-    position: relative;
-    min-width: 0;
-    font-size: 1rem;
+    border-bottom: 1px solid var(--color-border);
+    font-size: 0.95rem;
 
     &:before {
       content: attr(data-label);
       font-weight: 600;
-      color: #6366f1;
+      color: var(--color-primary);
       flex: 0 0 50%;
-      margin-right: 1rem;
       text-align: left;
     }
   }

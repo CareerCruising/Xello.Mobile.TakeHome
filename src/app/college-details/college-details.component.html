@@ -1,15 +1,68 @@
-<div *ngIf="college$ | async as college; else noCollege" class="college-details-card">
-  <h2>{{ college.name }}</h2>
-  <ul>
-    <li><strong>Id:</strong> {{ college.id }}</li>
-    <li><strong>City:</strong> {{ college.city }}</li>
-    <li><strong>State:</strong> {{ college.state }}</li>
-    <li><strong>Number of Students:</strong> {{ college.numStudents }}</li>
-    <li><strong>Tuition & Fees:</strong> {{ college.tuitionAndFees | currency:'USD' }}</li>
-    <li><strong>Number of Majors:</strong> {{ college.numMajors }}</li>
-    <li><strong>Has Sports:</strong> {{ college.hasSports ? 'Yes' : 'No' }}</li>
-  </ul>
+<div class="details-page">
+  <button
+    class="back-btn"
+    (click)="backToList()"
+    aria-label="Back to college list"
+  >
+    ← Back to List
+  </button>
+
+  <div
+    *ngIf="loading$ | async"
+    class="loading"
+    role="status"
+    aria-live="polite"
+    style="padding: 1rem; text-align: center; color: var(--color-text-muted)"
+  >
+    Loading college details…
+  </div>
+
+  <ng-container *ngIf="college$ | async as college; else noCollege">
+    <article class="college-card" aria-label="College details">
+      <!-- Hero -->
+      <header class="card-hero">
+        <div class="hero-badge">{{ college.state }}</div>
+        <h2 class="card-title">{{ college.name }}</h2>
+        <p class="card-subtitle">{{ college.city }}, {{ college.state }}</p>
+      </header>
+
+      <!-- Stats grid -->
+      <div class="stats-grid">
+        <div class="stat-item">
+          <span class="stat-label">Students</span>
+          <span class="stat-value">{{ college.numStudents | number }}</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">Tuition &amp; Fees</span>
+          <span class="stat-value">{{
+            college.tuitionAndFees | currency: 'USD' : 'symbol' : '1.0-0'
+          }}</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">Majors</span>
+          <span class="stat-value">{{ college.numMajors }}</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">Has Sports</span>
+          <span
+            class="stat-value"
+            [class.yes]="college.hasSports"
+            [class.no]="!college.hasSports"
+          >
+            {{ college.hasSports ? 'Yes' : 'No' }}
+          </span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">College ID</span>
+          <span class="stat-value muted">#{{ college.id }}</span>
+        </div>
+      </div>
+    </article>
+  </ng-container>
+
+  <ng-template #noCollege>
+    <p *ngIf="!(loading$ | async)" class="no-college">
+      College not found. It may not exist or the data is still loading.
+    </p>
+  </ng-template>
 </div>
-<ng-template #noCollege>
-  <p>No college selected.</p>
-</ng-template>

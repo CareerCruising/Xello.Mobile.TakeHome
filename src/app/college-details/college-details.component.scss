@@ -1,30 +1,198 @@
-.college-details-card {
-  background: #fff;
-  border-radius: 1rem;
-  box-shadow: 0 2px 12px rgba(79, 70, 229, 0.08);
-  padding: 2rem;
-  margin: 2rem auto;
-  max-width: 500px;
+@import '../../styles.scss';
+
+:host {
+  display: block;
   width: 100%;
+  box-sizing: border-box;
+  padding: 1rem 1.5rem 1.5rem;
+}
 
-  h2 {
-    margin-top: 0;
-    color: #4f46e5;
-    font-size: 2rem;
-    font-weight: 700;
+// Page wrapper
+.details-page {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+}
+
+// Back button
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 1rem;
+  align-self: flex-start;
+  padding: 0.5rem 1.25rem;
+  min-height: 44px;
+  border: 1.5px solid var(--color-primary);
+  border-radius: 0.5rem;
+  background: white;
+  color: var(--color-primary);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    color 0.2s;
+
+  &:hover {
+    background: var(--color-primary);
+    color: white;
+  }
+  &:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+}
+
+// Card
+.college-card {
+  width: 100%;
+  max-width: 48rem;
+  background: white;
+  border: 1px solid var(--color-border);
+  border-radius: 1.25rem;
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+  align-self: center;
+}
+
+// Hero header
+.card-hero {
+  background: var(--gradient-row-hover);
+  border-bottom: 1px solid var(--color-border);
+  padding: 1.25rem 1.5rem 1rem;
+  position: relative;
+}
+
+.hero-badge {
+  display: inline-block;
+  padding: 0.2rem 0.75rem;
+  background: var(--color-primary);
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-radius: 999px;
+  margin-bottom: 0.4rem;
+}
+
+.card-title {
+  margin: 0 0 0.25rem;
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  font-weight: 700;
+  color: var(--color-primary-dark);
+  font-family: var(--font-family);
+  line-height: 1.2;
+}
+
+.card-subtitle {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--color-text-muted);
+}
+
+// Stats grid
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 0.75rem 1.25rem;
+  border-right: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+
+  &:nth-child(5) {
+    grid-column: 1 / -1;
+  }
+  &:last-child {
+    border-right: 1px solid var(--color-border);
+  }
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.stat-value {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--gray-900);
+
+  &.yes {
+    color: #16a34a;
+  }
+  &.no {
+    color: #dc2626;
+  }
+  &.muted {
+    font-size: 1rem;
+    color: var(--color-text-muted);
+    font-weight: 500;
+  }
+}
+
+// Mobile
+@media (max-width: 500px) {
+  :host {
+    padding: 0.5rem 0 1rem;
   }
 
-  ul {
-    list-style: none;
-    padding: 0;
-
-    li {
-      margin-bottom: 0.75rem;
-      font-size: 1.1rem;
-
-      strong {
-        color: #9333ea;
-      }
-    }
+  .details-page {
+    padding: 0.75rem 0.75rem 1rem;
   }
+
+  .back-btn {
+    margin-bottom: 0.6rem;
+    padding: 0.4rem 1rem;
+    font-size: 0.875rem;
+    min-height: 38px;
+  }
+
+  .college-card {
+    border-radius: 0.875rem;
+    max-width: 80%;
+  }
+
+  .card-hero {
+    padding: 1rem 1rem 0.75rem;
+  }
+
+  .card-title {
+    font-size: 1.35rem;
+  }
+
+  .card-subtitle {
+    font-size: 0.875rem;
+  }
+
+  .stat-item {
+    padding: 0.6rem 0.875rem;
+  }
+
+  .stat-label {
+    font-size: 0.7rem;
+  }
+
+  .stat-value {
+    font-size: 1.05rem;
+  }
+}
+
+// No college fallback
+.no-college {
+  color: var(--color-text-muted);
+  text-align: center;
+  padding: 3rem;
+  font-size: 1.1rem;
 }

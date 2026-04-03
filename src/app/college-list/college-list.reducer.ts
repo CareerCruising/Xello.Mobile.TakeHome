@@ -11,12 +11,24 @@ export interface CollegeListState {
 export const initialState: CollegeListState = {
   colleges: [],
   loading: false,
-  error: null,
+  error: null
 };
 
 export const collegeListReducer = createReducer(
   initialState,
-  on(CollegeListActions.loadColleges, (state) => ({ ...state, loading: true, error: null })),
-  on(CollegeListActions.loadCollegesSuccess, (state, { colleges }) => ({ ...state, colleges, loading: false })),
-  on(CollegeListActions.loadCollegesFailure, (state, { error }) => ({ ...state, loading: false, error }))
+  on(CollegeListActions.loadColleges, (state) => ({
+    ...state,
+    loading: true,
+    error: null
+  })),
+  on(CollegeListActions.loadCollegesSuccess, (state, { colleges }) => ({
+    ...state,
+    colleges,
+    loading: false
+  })),
+  on(CollegeListActions.loadCollegesFailure, (state, { error }) => ({
+    ...state,
+    loading: false,
+    error
+  }))
 );
