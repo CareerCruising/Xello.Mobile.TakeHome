@@ -1,0 +1,79 @@
+<div class="college-list-container" >
+    <div *ngIf="data && data.length === 0" class="empty-list" role="region" aria-label="Colleges List">
+        <p>No colleges found.</p>
+    </div>
+    <div *ngIf="data && data.length > 0" class="colleges-table-wrapper" >
+      <table class="colleges-table" role="grid" aria-label="List of Colleges">
+        <colgroup>
+          <col class="col-id w-col-1">
+          <col class="col-name w-col-3">
+          <col class="col-city w-col-3">
+          <col class="col-state w-col-1">
+          <col class="col-num-students w-col-2">
+          <col class="col-tuition-fees w-col-2">
+          <col class="col-num-majors w-col-2">
+          <col class="col-has-sports w-col-1">
+        </colgroup>
+          <thead>
+              <tr role="row">
+                  <th role="columnheader" (click)="onHeaderClick('id')">
+                    Id <div class="sort-arrow">{{sortProperty === 'id' ? (sortOrder === 'asc' ? '↑' : '↓') : ''}}</div>
+                  </th>
+                  <th role="columnheader" (click)="onHeaderClick('name')">
+                    Name <div class="sort-arrow">{{sortProperty === 'name' ? (sortOrder === 'asc' ? '↑' : '↓') : ''}}</div>
+                  </th>
+                  <th role="columnheader" (click)="onHeaderClick('city')">
+                    City <div class="sort-arrow">{{sortProperty === 'city' ? (sortOrder === 'asc' ? '↑' : '↓') : ''}}</div>
+                  </th>
+                  <th role="columnheader" (click)="onHeaderClick('state')">
+                    State <div class="sort-arrow">{{sortProperty === 'state' ? (sortOrder === 'asc' ? '↑' : '↓') : ''}}</div>
+                  </th>
+                  <th role="columnheader" (click)="onHeaderClick('numStudents')">
+                    Num Students <div class="sort-arrow">{{sortProperty === 'numStudents' ? (sortOrder === 'asc' ? '↑' : '↓') : ''}}</div>
+                  </th>
+                  <th role="columnheader" (click)="onHeaderClick('tuitionAndFees')">
+                    Tuition & Fees <div class="sort-arrow">{{sortProperty === 'tuitionAndFees' ? (sortOrder === 'asc' ? '↑' : '↓') : ''}}</div>
+                  </th>
+                  <th role="columnheader" (click)="onHeaderClick('numMajors')">
+                    Num Majors <div class="sort-arrow">{{sortProperty === 'numMajors' ? (sortOrder === 'asc' ? '↑' : '↓') : ''}}</div>
+                  </th>
+                  <th role="columnheader" (click)="onHeaderClick('hasSports')">
+                    Has Sports <div class="sort-arrow">{{sortProperty === 'hasSports' ? (sortOrder === 'asc' ? '↑' : '↓') : ''}}</div>
+                  </th>
+              </tr>
+          </thead>
+        </table>
+      <cdk-virtual-scroll-viewport #viewport [itemSize]="50" class="list-viewport"
+        [attr.aria-label]="'List of ' + (data?.length || 0) + 'Colleges'">
+        <table class="colleges-table">
+          <colgroup>
+              <col class="col-id w-col-1">
+              <col class="col-name w-col-3">
+              <col class="col-city w-col-3">
+              <col class="col-state w-col-1">
+              <col class="col-num-students w-col-2">
+              <col class="col-tuition-fees w-col-2">
+              <col class="col-num-majors w-col-2">
+              <col class="col-has-sports w-col-1">
+          </colgroup>
+          <tbody>
+            <tr *cdkVirtualFor="let item of data| filterByName: filterText | sortBy: sortProperty: sortOrder; trackBy: trackById " 
+            (click)="selectItem.emit(item)"
+            (keydown.enter)="selectItem.emit(item)" 
+            role="row" 
+            tabindex="0" 
+            class="item-row">
+              <td data-label="Id" role="cell">{{ item.id }}</td>
+              <td data-label="Name" role="cell">{{ item.name }}</td>
+              <td data-label="City" role="cell">{{ item.city }}</td>
+              <td data-label="State" role="cell">{{ item.state }}</td>
+              <td data-label="Num Students" role="cell">{{ item.numStudents }}</td>
+              <td data-label="Tuition & Fees" role="cell">{{ item.tuitionAndFees | currency:'USD' }}</td>
+              <td data-label="Num Majors" role="cell">{{ item.numMajors }}</td>
+              <td data-label="Has Sports" role="cell">{{ item.hasSports ? 'Yes' : 'No' }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </cdk-virtual-scroll-viewport>
+    </div>
+</div>

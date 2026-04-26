@@ -1,0 +1,167 @@
+:host {
+    display: flex;
+    flex: 1;
+    min-height: 0;
+}
+
+.college-list-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 0;
+    background-color: var(--white);
+}
+
+.colleges-table-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 0;
+    overflow:hidden;
+}
+
+.colleges-table {
+    table-layout: fixed;
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 1rem;
+}
+
+.empty-list {
+    text-align: center;
+    padding: 2rem;
+    color: var(--gray-400);
+    flex:1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.colleges-table-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow:hidden;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 1rem;
+}
+
+// @media (max-width: 768px) {
+//   .list-container {
+//     height: calc(100vh - 250px);
+//     max-height: 60vh;
+//   }
+// }
+
+thead {
+    background-color: var(--white);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    display: table-header-group;
+}
+
+th {
+    padding: 0.75rem;
+    text-align: left;
+    font-weight: 600;
+    border-bottom: 2px solid #ddd;
+    background-color: var(--white);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+td {
+    padding: 0.75rem 0.5rem;
+    border-bottom: 1px solid var(--gray-400);
+    font-size: 1rem;
+}
+
+.item-row:hover , th:hover {
+    background: var(--blue-to-white-horizontal-gradient);
+    box-shadow: 0 2px 12px var(--gray-900);
+    transform: scale(1.01);
+    transition: background 0.3s, box-shadow 0.3s, transform 0.2s;
+    cursor: pointer;
+}
+
+.list-viewport {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    scrollbar-width: none;
+}
+
+.w-col-1 { width: 8%; }
+.w-col-2 { width: 12%; }
+.w-col-3 { width: 20%; }
+
+.sort-arrow {
+    font-size: 0.75rem;
+    margin-left: 0.25rem;
+    color: var(--gray-500);
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+@media (max-width: 768px) {
+
+    .w-col-1 { width: 7.5%; }
+    .w-col-2 { width: 14%; }
+    .w-col-3 { width: 17%; }
+
+    .colleges-table {
+        font-size: 0.75rem;
+    }
+
+    th,td {
+        padding: 0.5rem 0.25rem;
+        font-size: 0.75rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .colleges-table {
+        display: block;
+    }
+
+    thead {
+        display: none;
+    }
+
+    tbody, tr {
+        display: block;
+        margin-bottom: 8px;
+        padding: 8px;
+        border: 1px solid var(--gray-400);
+        border-radius: 4px;
+    }
+
+    td {
+        display: block;
+        text-align: right;
+        padding-left: 50%;
+        position: relative;
+        border: none;
+        padding-bottom: 0.5rem;
+        padding-top: 0.5rem;
+    }
+
+    td:before {
+        content: attr(data-label);
+        position: absolute;
+        left: 0;
+        top: 0;
+        padding-left: 0.75rem;
+        font-weight: 600;
+        text-align: left;
+    }
+}
