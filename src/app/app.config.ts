@@ -4,8 +4,8 @@ import { routes } from './app.routes';
 import { provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
-import { collegeListReducer } from './college-list/college-list.reducer';
-import { CollegeListEffects } from './college-list/college-list.effects';
+import { collegeListReducer } from './store/college-list.reducer';
+import { CollegeListEffects } from './store/college-list.effects';
 import { provideHttpClient } from '@angular/common/http';
 import { CollegeDetailsComponent } from './college-details/college-details.component';
 
