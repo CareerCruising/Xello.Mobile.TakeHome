@@ -1,0 +1,13 @@
+
+<div class="filter-wrapper" role="search" aria-label="Filter Colleges">
+    <label for="college-filter" class="filter-label">Filter Colleges By Name: </label>
+    <input
+        type="text" 
+        placeholder="Enter text to filter colleges..." 
+        [(ngModel)]="filter" 
+        (input)="handleInput($event)"
+        (keydown.escape)="clearFilter($event)"
+        aria-label="Enter text to filter colleges"
+        class="filter-input" 
+    />
+</div>

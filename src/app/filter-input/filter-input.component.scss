@@ -1,0 +1,33 @@
+.filter-wrapper {
+    padding: 0.5rem;
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.filter-label {
+    padding: 0.5rem 0.75rem;
+    font-weight: 600;
+    color: var(--gray-700);
+}
+
+.filter-input {
+    flex: 1;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--gray-300);
+    border-radius: 4px;
+    font-size: 1rem;
+    width: 100%;
+}
+
+@media (max-width: 480px) {
+    .filter-wrapper {
+        font-size: 0.75rem;
+    }
+    .filter-label {
+        padding: 5px;
+    }
+    .filter-input {
+        padding: 0px;
+    }
+}
