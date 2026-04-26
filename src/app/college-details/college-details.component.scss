@@ -1,7 +1,7 @@
 .college-details-card {
-  background: #fff;
+  background: var(--white);
   border-radius: 1rem;
-  box-shadow: 0 2px 12px rgba(79, 70, 229, 0.08);
+  box-shadow: 0 2px 12px var(--gray-900);
   padding: 2rem;
   margin: 2rem auto;
   max-width: 500px;
@@ -9,7 +9,7 @@
 
   h2 {
     margin-top: 0;
-    color: #4f46e5;
+    color: var(--bright-blue);
     font-size: 2rem;
     font-weight: 700;
   }
@@ -23,8 +23,53 @@
       font-size: 1.1rem;
 
       strong {
-        color: #9333ea;
+        color: var(--vivid-pink);
       }
     }
+  }
+}
+
+.back-btn-container {
+    position: fixed;
+    width: 100%;
+    top: 75px;
+    left: 0px;
+}
+
+.back-btn-container:hover {
+    background: var(--blue-to-white-horizontal-gradient);
+    box-shadow: 0 2px 12px var(--gray-900);
+    transform: scale(1.01);
+    transition: background 0.3s, box-shadow 0.3s, transform 0.2s;
+    cursor: pointer;
+}
+
+.back-btn {
+  background-color: transparent;
+  color: var(--bright-blue);
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+@media (max-width: 480px) {
+  .college-details-card {
+    padding: 1rem;
+    margin: 1rem;
+    max-width: 220px;
+    h2 {
+      font-size: 1.5rem;
+    }
+
+    ul li {
+      font-size: 1rem;
+    }
+  }
+
+  .back-btn {
+    font-size: 1rem;
+    padding: 0.25rem 0.75rem;
   }
 }

@@ -1,4 +1,15 @@
-<div *ngIf="college$ | async as college; else noCollege" class="college-details-card">
+<div class="back-btn-container">
+  <button (click)="goBack()" aria-label="Go back to colleges list" class="back-btn"> < Back to Colleges List</button>
+</div>
+<div *ngIf="loading$ | async" class="loading" class="loading-container" role="status" aria-live="polite">
+  Loading colleges details...
+</div>
+<div *ngIf="error$ | async as error" class="error" class="error-container" role="alert" aria-live="assertive">
+  Error loading college details
+</div>
+
+
+<div *ngIf="college$ | async as college;" class="college-details-card">
   <h2>{{ college.name }}</h2>
   <ul>
     <li><strong>Id:</strong> {{ college.id }}</li>
@@ -10,6 +21,6 @@
     <li><strong>Has Sports:</strong> {{ college.hasSports ? 'Yes' : 'No' }}</li>
   </ul>
 </div>
-<ng-template #noCollege>
-  <p>No college selected.</p>
-</ng-template>
+<div *ngIf="!(college$ | async) && !(loading$ | async) && !(error$ | async)" class="error" class="error-container" role="alert" aria-live="assertive">
+    No college Found.
+</div>
