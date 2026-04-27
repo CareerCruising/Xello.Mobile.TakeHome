@@ -44,10 +44,6 @@ export class CollegeListComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  onRowClick(college: College):void {
-    this.router.navigate(['/college', college.id]);
-  }
-
   performSearch(value:string):void {
     this.filter = value.trim();
   }
