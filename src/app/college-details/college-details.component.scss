@@ -1,0 +1,30 @@
+.college-details-card {
+  background: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 2px 12px rgba(79, 70, 229, 0.08);
+  padding: 2rem;
+  margin: 2rem auto;
+  max-width: 500px;
+  width: 100%;
+
+  h2 {
+    margin-top: 0;
+    color: #4f46e5;
+    font-size: 2rem;
+    font-weight: 700;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+
+    li {
+      margin-bottom: 0.75rem;
+      font-size: 1.1rem;
+
+      strong {
+        color: #9333ea;
+      }
+    }
+  }
+}

@@ -1,0 +1,29 @@
+<input type="text" placeholder="Filter by school name..." [(ngModel)]="filter" class="college-filter" />
+<table>
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Name</th>
+      <th>City</th>
+      <th>State</th>
+      <th>Num Students</th>
+      <th>Tuition & Fees</th>
+      <th>Num Majors</th>
+      <th>Has Sports</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let college of (colleges$ | async); trackBy: trackById" (click)="onRowClick(college)">
+      <td data-label="Id">{{ college.id }}</td>
+      <td data-label="Name">{{ college.name }}</td>
+      <td data-label="City">{{ college.city }}</td>
+      <td data-label="State">{{ college.state }}</td>
+      <td data-label="Num Students">{{ college.numStudents }}</td>
+      <td data-label="Tuition & Fees">{{ college.tuitionAndFees | currency:'USD' }}</td>
+      <td data-label="Num Majors">{{ college.numMajors }}</td>
+      <td data-label="Has Sports">{{ college.hasSports ? 'Yes' : 'No' }}</td>
+    </tr>
+  </tbody>
+</table>
+<div *ngIf="loading$ | async" class="loading">Loading colleges...</div>
+<div *ngIf="error$ | async as error" class="error">Error: {{ error }}</div>

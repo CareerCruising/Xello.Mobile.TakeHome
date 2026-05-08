@@ -14,16 +14,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have the 'ng-todo' title`, () => {
+  it(`should have the 'xello-senior-web-dev-takehome-web' title`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('ng-todo');
+    expect(app.title).toEqual('xello-senior-web-dev-takehome-web');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, ng-todo');
+    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, xello-senior-web-dev-takehome-web');
   });
 });
