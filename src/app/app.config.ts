@@ -1,14 +1,21 @@
-import { ApplicationConfig, isDevMode } from '@angular/core';
+import { ApplicationConfig } from '@angular/core';
 import { provideRouter } from '@angular/router';
-
 import { routes } from './app.routes';
 import { provideStore } from '@ngrx/store';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { todoReducer } from './reducers/todo.reducer';
+import { provideEffects } from '@ngrx/effects';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
-import { provideEffects } from '@ngrx/effects'
-import { TodosEffects } from './effects/todos.effects';
+import { collegeListReducer } from './college-list/college-list.reducer';
+import { CollegeListEffects } from './college-list/college-list.effects';
+import { provideHttpClient } from '@angular/common/http';
+import { CollegeDetailsComponent } from './college-details/college-details.component';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(routes), provideStore({ todos: todoReducer }), provideAnimationsAsync(), provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }), provideEffects(TodosEffects)]
+  providers: [
+    provideRouter(routes),
+    provideStore({ collegeList: collegeListReducer }),
+    provideEffects([CollegeListEffects]),
+    provideStoreDevtools({ maxAge: 25, logOnly: false }),
+    provideHttpClient(),
+    CollegeDetailsComponent
+  ]
 };

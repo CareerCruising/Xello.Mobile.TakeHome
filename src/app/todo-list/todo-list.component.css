@@ -1,7 +1,0 @@
-.todoFormAndInfo {
-    position: sticky;
-    bottom: 4rem;
-    z-index: 1000;
-    background-color: grey;
-    padding: 1rem;
-}
