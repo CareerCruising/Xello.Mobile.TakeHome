@@ -2,6 +2,14 @@
 
 Welcome, intrepid applicant! You have been chosen to embark on a journey through the wilds of Angular, NgRx, and CSS. Your mission, should you choose to accept it (and you must, because you opened this repo), is to whip this codebase into shape and prove your senior developer prowess.
 
+## Start From This Template
+
+This is a template repository. Click **Use this template > Create a new repository** to create your own copy, then complete the assignment in that new repository. Please do not open a pull request against this repository.
+
+## A Note on AI Usage
+
+Please limit the use of AI tools in your submission. We are interested in reviewing your thinking, judgment, tradeoffs, and problem-solving approach, not an AI-generated solution. If you do use AI for small assists, please mention where and how you used it in your submission notes.
+
 ## Your Quest
 
 ### 1. Fix Performance Issues with Scrolling
@@ -36,7 +44,7 @@ This project uses node `18.20.8`. We use [volta](https://volta.sh/) to manage ou
 - The ability to spot and fix subtle bugs (and not-so-subtle ones)
 
 ## Bonus Points
-- Leave a comment in your PR with anything you found particularly fun, tricky, or rage-inducing.
+- Include a note with your submission about anything you found particularly fun, tricky, or rage-inducing.
 - If you add tests, we will send you a virtual high five.
 
 Good luck, and may your stack traces be short and your builds be green!
